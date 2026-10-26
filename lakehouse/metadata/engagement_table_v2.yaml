@@ -1,0 +1,57 @@
+
+table_name: student_engagement
+
+version: 2
+
+description: Records student engagement events across campuses (St. Paul and online) and includes an optional advisor note.
+
+columns:
+  - name: event_id
+    type: integer
+    required: true
+  - name: student_id
+    type: integer
+    required: true
+  - name: event_type
+    type: string
+    required: true
+  - name: event_date
+    type: date
+    required: true
+  - name: duration_minutes
+    type: integer
+    required: true
+  - name: campus
+    type: string
+    required: true
+  - name: advisor_note
+    type: string
+    required: false
+
+partition_keys:
+  - year
+  - month
+
+schema_enforcement:
+  required_columns:
+    - event_id
+    - student_id
+    - event_type
+    - event_date
+    - duration_minutes
+    - campus
+  allowed_types:
+    event_id: integer
+    student_id: integer
+    event_type: string
+    event_date: date
+    duration_minutes: integer
+    campus: string
+    advisor_note: string
+
+schema_evolution:
+  notes: >
+    Version 2 adds an optional advisor_note column.
+    The older files can still use version 1 without needing
+    to be changed. If a record does not have an advisor note,
+    the value can be left empty.

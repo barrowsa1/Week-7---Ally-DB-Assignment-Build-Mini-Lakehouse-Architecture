@@ -1,0 +1,56 @@
+
+table_name: student_engagement
+
+version: 1
+
+description: Records student engagement events across campuses (St. Paul and online).
+
+columns:
+  - name: event_id
+    type: integer
+    required: true
+
+  - name: student_id
+    type: integer
+    required: true
+
+  - name: event_type
+    type: string
+    required: true
+
+  - name: event_date
+    type: date
+    required: true
+
+  - name: duration_minutes
+    type: integer
+    required: true
+
+  - name: campus
+    type: string
+    required: true
+
+partition_keys:
+  - year
+  - month
+
+schema_enforcement:
+  required_columns:
+    - event_id
+    - student_id
+    - event_type
+    - event_date
+    - duration_minutes
+    - campus
+  allowed_types:
+    event_id: integer
+    student_id: integer
+    event_type: string
+    event_date: date
+    duration_minutes: integer
+    campus: string
+
+schema_evolution:
+  notes: >
+    Future schema versions may add optional columns while preserving
+    existing columns so older data files remain usable.
